@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link, Outlet, NavLink } from 'react-router-dom';
 import { supabase } from '../lib/supabaseClient';
 import { Button } from "@/components/ui/button";
-// --- Home, LogOut, Files, FileText are needed ---
-import { LogOut, Files, FileText, Home } from "lucide-react"; 
+// --- CHANGED: Added ScanSearch icon ---
+import { LogOut, Files, FileText, Home, ScanSearch } from "lucide-react"; 
 
 const AdminLayout = () => {
   const [profile, setProfile] = useState<any>(null);
@@ -65,8 +65,6 @@ const AdminLayout = () => {
         </div>
         <nav className="flex-1 p-4 space-y-2">
           
-          {/* --- "View Student Dashboard" LINK IS REMOVED --- */}
-
           {/* Admin specific links */}
           <NavLink
             to="/admin/job-postings"
@@ -86,9 +84,21 @@ const AdminLayout = () => {
             <FileText className="h-4 w-4" />
             Applications
           </NavLink>
+          
+          {/* --- NEW LINK ADDED HERE --- */}
+          <NavLink
+            to="/admin/evaluator"
+            className={({ isActive }) =>
+              `flex items-center gap-2 p-2 rounded-lg ${isActive ? 'bg-primary text-primary-foreground' : 'hover:bg-secondary'}`
+            }
+          >
+            <ScanSearch className="h-4 w-4" />
+            AI Resume Evaluator
+          </NavLink>
+          
         </nav>
         <div className="p-4 mt-auto border-t border-border text-center text-sm text-muted-foreground">
-           Logged in as {profile?.full_name || 'Admin'}
+            Logged in as {profile?.full_name || 'Admin'}
         </div>
       </aside>
 
@@ -96,7 +106,6 @@ const AdminLayout = () => {
       <div className="flex-1 flex flex-col">
         {/* Admin Header */}
         <header className="bg-card border-b border-border shadow-sm flex justify-between items-center h-16 px-8">
-          {/* --- THIS HOME LINK NAVIGATES ON THE SAME PAGE --- */}
           <Link to="/dashboard" title="Go to Student Dashboard">
             <Button variant="ghost" size="icon">
               <Home className="h-5 w-5" />
